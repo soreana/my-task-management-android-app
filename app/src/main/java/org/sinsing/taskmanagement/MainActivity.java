@@ -18,7 +18,7 @@ import com.tuenti.widget.AnimatedCircleProgressView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private float englishProgress,networkProgress,workProgress,osProgress,otherProgress;
+    private float englishProgress,networkProgress,workProgress,osProgress,otherProgress,totalProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        englishProgress = networkProgress= workProgress= osProgress= otherProgress = 0;
+        englishProgress = networkProgress= workProgress= osProgress= otherProgress = totalProgress=0;
 
         /*
         AnimatedCircleProgressView mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(R.id.progress);
@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity
         AnimatedCircleProgressView mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(id);
         assert mCircledAnimatedProgressView != null;
         mCircledAnimatedProgressView.setProgress(progress);
+        totalProgress += (float)1/30;
+        mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(R.id.total);
+        assert mCircledAnimatedProgressView != null;
+        mCircledAnimatedProgressView.setProgress(totalProgress);
     }
 
     public void english(View view) {
