@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="org.sinsing.taskmanagement.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/english"
+        android:id="@+id/button"
+        android:layout_marginTop="38dp"
+        android:layout_alignParentTop="true"
+        android:onClick="english"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/network"
+        android:id="@+id/button2"
+        android:onClick="network"
+        android:layout_below="@+id/button"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/work"
+        android:id="@+id/button3"
+        android:onClick="work"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/os"
+        android:id="@+id/button4"
+        android:onClick="os"
+        android:layout_below="@+id/work"
+        android:layout_alignStart="@+id/button3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/other"
+        android:id="@+id/button5"
+        android:onClick="other"
+        android:layout_below="@+id/button4"
+        android:layout_alignStart="@+id/button4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_marginTop="42dp"
+        android:textSize="30sp"
+        android:text="@string/total"
+        android:layout_below="@+id/button5"
+        android:layout_alignStart="@+id/button4" />
+
+    <com.tuenti.widget.AnimatedCircleProgressView
+        android:id="@+id/english"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:progress_stroke_width="6dp"
+        app:progress_pending_color="#FFFF0000"
+        app:progress_first_phase_color="#FF00FF00"
+        app:progress_second_phase_color="#FFFF0000"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/button" />
+
+    <com.tuenti.widget.AnimatedCircleProgressView
+        android:id="@+id/other"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:progress_stroke_width="6dp"
+        app:progress_pending_color="#FFFF0000"
+        app:progress_first_phase_color="#FF00FF00"
+        app:progress_second_phase_color="#FFFF0000"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/editText"
+        android:layout_below="@+id/os"
+        android:layout_alignStart="@+id/os" />
+
+    <com.tuenti.widget.AnimatedCircleProgressView
+        android:id="@+id/os"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:progress_stroke_width="6dp"
+        app:progress_pending_color="#FFFF0000"
+        app:progress_first_phase_color="#FF00FF00"
+        app:progress_second_phase_color="#FFFF0000"
+        android:layout_below="@+id/work"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/button4"
+        android:layout_alignStart="@+id/work" />
+
+    <com.tuenti.widget.AnimatedCircleProgressView
+        android:id="@+id/work"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:progress_stroke_width="6dp"
+        app:progress_pending_color="#FFFF0000"
+        app:progress_first_phase_color="#FF00FF00"
+        app:progress_second_phase_color="#FFFF0000"
+        android:layout_below="@+id/network"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_alignStart="@+id/network" />
+
+    <com.tuenti.widget.AnimatedCircleProgressView
+        android:id="@+id/network"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:progress_stroke_width="6dp"
+        app:progress_pending_color="#FFFF0000"
+        app:progress_first_phase_color="#FF00FF00"
+        app:progress_second_phase_color="#FFFF0000"
+        android:layout_below="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/button3"
+        android:layout_alignStart="@+id/english" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="30sp"
+        android:text="@string/number"
+        android:layout_alignTop="@+id/editText"
+        android:layout_alignStart="@+id/other"
+        android:layout_marginStart="38dp" />
+</RelativeLayout>
