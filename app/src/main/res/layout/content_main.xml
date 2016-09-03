@@ -136,11 +136,12 @@
         android:id="@+id/total"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:progress_stroke_width="6dp"
+        app:progress_stroke_width="12dp"
         app:progress_pending_color="#FFFF0000"
         app:progress_first_phase_color="#FF00FF00"
         app:progress_second_phase_color="#FFFF0000"
         android:layout_alignBottom="@+id/editText"
+        android:onClick="reset"
         android:layout_below="@+id/other"
         android:layout_alignStart="@+id/other" />
 

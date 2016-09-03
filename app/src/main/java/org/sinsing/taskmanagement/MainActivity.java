@@ -3,6 +3,7 @@ package org.sinsing.taskmanagement;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,10 +16,23 @@ import android.view.MenuItem;
 
 import com.tuenti.widget.AnimatedCircleProgressView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private float englishProgress,networkProgress,workProgress,osProgress,otherProgress,totalProgress;
+    private float englishProgress, networkProgress, workProgress, osProgress, otherProgress, totalProgress;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        writeDataHelper();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +59,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        englishProgress = networkProgress= workProgress= osProgress= otherProgress = totalProgress=0;
-
         /*
         AnimatedCircleProgressView mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(R.id.progress);
         mCircledAnimatedProgressView.setProgress(0.2f);
         */
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        readDataHelper();
+        writeAllToDisplayHelper();
     }
 
     @Override
@@ -110,39 +129,92 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void progressHelper(int id, float progress ){
+    private void progressHelper(int id, float progress) {
         AnimatedCircleProgressView mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(id);
         assert mCircledAnimatedProgressView != null;
         mCircledAnimatedProgressView.setProgress(progress);
-        totalProgress += (float)1/30;
-        mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(R.id.total);
+    }
+
+    private void readDataHelper() {
+        try (FileInputStream fin = openFileInput("temp.txt");) {
+            int c;
+            String temp = "";
+            while ((c = fin.read()) != -1) {
+                temp = temp + Character.toString((char) c);
+            }
+            String[] tempArray = temp.split("\n");
+            englishProgress = Float.parseFloat(tempArray[0]);
+            networkProgress = Float.parseFloat(tempArray[1]);
+            workProgress = Float.parseFloat(tempArray[2]);
+            osProgress = Float.parseFloat(tempArray[3]);
+            otherProgress = Float.parseFloat(tempArray[4]);
+            totalProgress = Float.parseFloat(tempArray[5]);
+        } catch (Exception e) {
+            englishProgress = networkProgress = workProgress = osProgress = otherProgress = totalProgress = 0;
+        }
+    }
+
+    private void writeDataHelper() {
+        try (FileOutputStream fOut = openFileOutput("temp.txt", MODE_WORLD_WRITEABLE)) {
+            String temp = englishProgress + "\n" + networkProgress + "\n" + workProgress +
+                    "\n" + osProgress + "\n" + otherProgress + "\n" + totalProgress;
+            fOut.write(temp.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeAllToDisplayHelper(){
+        progressHelper(R.id.english, englishProgress);
+        progressHelper(R.id.network, networkProgress);
+        progressHelper(R.id.work, workProgress);
+        progressHelper(R.id.os, osProgress);
+        progressHelper(R.id.other, otherProgress);
+        progressHelper(R.id.total, totalProgress);
+    }
+
+    private void totalProgressPlusEqual() {
+        totalProgress += (float) 1 / 30;
+        AnimatedCircleProgressView mCircledAnimatedProgressView = (AnimatedCircleProgressView) findViewById(R.id.total);
         assert mCircledAnimatedProgressView != null;
         mCircledAnimatedProgressView.setProgress(totalProgress);
+
     }
 
     public void english(View view) {
-        englishProgress += (float)1/10;
-        progressHelper(R.id.english,englishProgress);
+        englishProgress += (float) 1 / 10;
+        progressHelper(R.id.english, englishProgress);
+        totalProgressPlusEqual();
     }
 
     public void other(View view) {
-        otherProgress += (float)1/6;
-        progressHelper(R.id.other,otherProgress);
+        otherProgress += (float) 1 / 6;
+        progressHelper(R.id.other, otherProgress);
+        totalProgressPlusEqual();
     }
 
     public void os(View view) {
         osProgress += 1;
-        progressHelper(R.id.os,osProgress);
+        progressHelper(R.id.os, osProgress);
+        totalProgressPlusEqual();
     }
 
     public void work(View view) {
-        workProgress += (float)1/5;
-        progressHelper(R.id.work,workProgress);
+        workProgress += (float) 1 / 5;
+        progressHelper(R.id.work, workProgress);
+        totalProgressPlusEqual();
     }
 
 
     public void network(View view) {
-        networkProgress += (float)1/8;
-        progressHelper(R.id.network,networkProgress);
+        networkProgress += (float) 1 / 8;
+        progressHelper(R.id.network, networkProgress);
+        totalProgressPlusEqual();
+    }
+
+    public void reset(View view) {
+        englishProgress = networkProgress = workProgress = osProgress = otherProgress = totalProgress = 0;
+        writeDataHelper();
+        writeAllToDisplayHelper();
     }
 }
